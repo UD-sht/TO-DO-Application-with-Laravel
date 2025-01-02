@@ -16,7 +16,6 @@ class LoginController extends Controller
     }
     public function authenticate(Request $request)
     {
-        // dd('test');
         $remember = $request->has('remember') ?: false;
         if (Auth::attempt($request->only('user_code', 'password'), $remember)) {
             $user = Auth::user();

@@ -2,6 +2,6 @@
 
 return [
     'modules' => [
-        'todo',
+        'TaskSchedule',
     ],
 ];

@@ -2,26 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\ListItem;
-use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
-
-use DB;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\UserRepository;
 
 class ChangePasswordController extends Controller
 {
     /**
      * UserController constructor.
      *
-     * @param ListItem $listItems
      * @param UserRepository $users
      */
     public function __construct(
-        ListItem $listItems,
-        UserRepository $users
-    )
-    {
-        $this->listItems = $listItems;
+        protected UserRepository $users
+    ) {
         $this->users = $users;
     }
 
@@ -36,11 +30,11 @@ class ChangePasswordController extends Controller
         try {
             $inputs = $request->except('_token', 'method', 'uri', 'ip');
             $bindingArray = [
-                'user_code'=>auth()->user()->user_code,
-                'old_password'=>$request->current_password,
-                'new_password'=>$request->new_password,
-                'success'=>'bindings',
-                'msg'=>'bindings',
+                'user_code' => auth()->user()->user_code,
+                'old_password' => $request->current_password,
+                'new_password' => $request->new_password,
+                'success' => 'bindings',
+                'msg' => 'bindings',
             ];
 
             $params = $this->users->setCustomParameters($bindingArray);
@@ -48,7 +42,9 @@ class ChangePasswordController extends Controller
                 array(
                     'msg' => ['string'],
                     'success' => ['string'],
-                ), true);
+                ),
+                true
+            );
 
             $result = $this->users->procedureCallWithoutOperation('PKG_CALL_SECURITY.PRC_CHANGE_PASSWORD', $params, $bindings);
 

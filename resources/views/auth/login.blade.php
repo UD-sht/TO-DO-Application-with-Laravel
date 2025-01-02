@@ -3,27 +3,22 @@
 @section('title', 'User Login')
 
 @push('scripts')
-    <script type="text/javascript" nonce="">
-        $("#eye").click(function() {
-
-            $(this).toggleClass('bi-eye-slash');
-            $(this).toggleClass('bi-eye');
+    <script type="text/javascript" nonce="{{ csp_nonce() }}">
+        document.addEventListener('DOMContentLoaded', function(e) {
+            $("#eye").click(function() {
+                $(this).toggleClass('bi-eye');
+                $(this).toggleClass('bi-eye-slash');
+                const isPasswordVisible = document.getElementById("password").getAttribute("type") ===
+                    "text";
+                if (isPasswordVisible) {
+                    document.getElementById("password").setAttribute("type", "password");
+                    document.getElementById("eye").style.color = '#7a797e';
+                } else {
+                    document.getElementById("password").setAttribute("type", "text");
+                    document.getElementById("eye").style.color = '#5887ef';
+                }
+            });
         });
-        var state = false;
-
-        function toggle() {
-            if (state) {
-                document.getElementById("password").setAttribute("type", "password");
-                document.getElementById("eye").style.color = '#7a797e';
-                state = false;
-            } else {
-                document.getElementById("password").setAttribute("type", "text");
-                document.getElementById("eye").style.color = '#5887ef';
-
-
-                state = true;
-            }
-        }
     </script>
 @endpush
 @section('page-content')
@@ -58,28 +53,34 @@
                         <div class="form-group mb-3">
                             <input type="password" class="form-control" placeholder="Password" name="password"
                                 id="password">
-                            <span><i class="bi-eye" id="eye" onclick="toggle()"></i></span>
+                            <span><i class="bi-eye" id="eye"></i></span>
                         </div>
                         <div>
                             <div class="row">
-                                {{-- <div class="col-lg-6"> --}}
-                                {{-- <label for="rememberme" class="fw-bold"><input type="checkbox" name="remember" id="remember"> --}}
-                                {{-- Remember Me</label> --}}
-                                {{-- </div> --}}
-                                {{-- <div class="col-lg-6"> --}}
-                                {{-- <a href="{!! route('forget.password.create') !!}" --}}
-                                {{-- class="float-end text-decoration-none fw-bold">Forgot password</a> --}}
-                                {{-- </div> --}}
+                                <div class="col-lg-6">
+                                    <label for="rememberme" class="fw-bold"><input type="checkbox" name="remember"
+                                            id="remember">
+                                        Remember Me</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="#" class="float-end text-decoration-none fw-bold">Forgot
+                                        password</a>
+                                </div>
                             </div>
                         </div>
-                        @if (request()->has('previous'))
+                        {{-- @if (request()->has('previous'))
                             <input type="hidden" name="previous" value="{{ request()->get('previous') }}">
                         @else
                             <input type="hidden" name="previous" value="{{ url()->previous() }}">
-                        @endif
+                        @endif --}}
 
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                        <button class="btn btn-warning text-dark col-12 fw-bold" type="submit">Sign In</button>
+                        <button class="btn btn-warning text-dark col-12 fw-bold mb-3" type="submit">Sign In</button>
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{{ route('register') }}" class="text-decoration-none fw-bold">Register</a>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
-    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="{!! asset('css/app.css') !!}">
-    <link rel="stylesheet" href="{{ asset('stylesheets/style.css' . '?v=' . time()) }}">
-    <style>
-        .boolean_display {
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@yield('title')</title>
+        <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <link rel="stylesheet" href="{!! asset('css/app.css') !!}">
+        <link rel="stylesheet" href="{{ asset('stylesheets/style.css' . '?v=' . time()) }}">
+        <style>
+            .boolean_display {
             display: none;
         }
     </style>
@@ -19,7 +19,7 @@
 </head>
 <div class="preloader">
     <div class="cube-wrapper">
-        <div class="mb-4"><img src="{{ asset('img/slogo.png') }}" class="w-25" alt=""></div>
+        <div class="mb-4"><img src="{{ asset('img/to-do.png') }}" class="w-25" alt=""></div>
         <div class="cube-folding">
             <span class="leaf1"></span>
             <span class="leaf2"></span>
@@ -48,24 +48,29 @@
         @include('layouts.footer')
     </main>
 
+
+
     <div class="modal fade" id="openModal" data-bs-backdrop="static" data-bs-keyboard="false"
-        aria-labelledby="openModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    aria-labelledby="openModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
             <div class="border-0 modal-content">
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="openSmallModal" data-bs-backdrop="static" data-bs-keyboard="false"
-        aria-labelledby="openModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="border-0 modal-content">
-            </div>
+    aria-labelledby="openModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="border-0 modal-content">
         </div>
     </div>
+</div>
 
-    <script src="{{ asset('js/app.js') }}"></script>s
-    <script type="text/javascript" nonce="{{ csp_nonce() }}">
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="{{ asset('js/app.js') }}"></script>s
+<script type="text/javascript" nonce="{{ csp_nonce() }}">
         const displayTime = document.querySelector(".display-time");
         // Time
         function showTime() {

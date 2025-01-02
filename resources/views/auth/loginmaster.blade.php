@@ -8,7 +8,7 @@
     <meta name="author" content="Uday Shrestha">
     <meta name="email" content="udshrestha48@gmail.com">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
     <!--Core CSS -->
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}">
@@ -16,12 +16,12 @@
 </head>
 
 <body>
-<div class="bg-light">
-    @yield('page-content')
-</div>
+    <div class="bg-light">
+        @yield('page-content')
+    </div>
 
-<script src="{!! asset('js/app.js') !!}"></script>
-@stack('scripts')
+    <script src="{!! asset('js/app.js') !!}"></script>
+    @stack('scripts')
 </body>
 
 </html>
