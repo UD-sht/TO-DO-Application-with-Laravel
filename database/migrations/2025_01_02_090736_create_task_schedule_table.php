@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('task_schedule', function (Blueprint $table) {
             $table->id();
-            $table->string('task_name');
+            $table->string('title');
             $table->text('description')->nullable();
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->enum('status', ['pending', 'in_progress', 'completed', 'overdue'])->default('pending');

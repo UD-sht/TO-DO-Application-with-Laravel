@@ -10,7 +10,7 @@ class TaskSchedule extends Model
     protected $table = 'task_schedule';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'task_name',
+        'title',
         'description',
         'priority',
         'status',

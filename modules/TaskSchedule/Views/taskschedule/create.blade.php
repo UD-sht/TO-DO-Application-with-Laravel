@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="col-lg-9">
-                <input type="text" class="form-control" name="task_name" id="id-task_name" tabindex="1" required>
+                <input type="text" class="form-control" name="title" id="id-title" tabindex="1" required>
             </div>
         </div>
 
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="col-lg-9">
-                <input type="date" class="form-control" name="due_date" id="due_date" tabindex="4">
+                <input type="date" class="form-control" name="due_date" id="due_date">
             </div>
         </div>
 

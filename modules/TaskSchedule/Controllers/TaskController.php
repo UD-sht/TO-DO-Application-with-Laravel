@@ -27,18 +27,6 @@ class TaskController extends Controller
 
             return DataTables::of($tasks)
                 ->addIndexColumn()
-                ->addColumn('task_name', function ($row) {
-                    return $row->task_name;
-                })
-                ->addColumn('status', function ($row) {
-                    return $row->status;
-                })
-                ->addColumn('priority', function ($row) {
-                    return $row->priority;
-                })
-                ->addColumn('due_date', function ($row) {
-                    return $row->due_date;
-                })
                 ->addColumn('action', function ($row) {
                     $routeParams = [
                         'id' => $row->id,
@@ -54,7 +42,7 @@ class TaskController extends Controller
                         '"  title="Edit" class="btn btn-outline-primary btn-sm open-modal-form"><i class="bi-pencil-square"></i></a>';
 
                     $btn .= '&emsp;<a href="javascript:;" class="btn btn-danger btn-sm delete-record"
-                            data-description="' . $row->task_name . '" title="delete" data-object="' . $deleteObject . '"
+                            data-description="' . $row->title . '" title="delete" data-object="' . $deleteObject . '"
                             data-href="' . route('todo.destroy', $routeParams) . '" >
                         <i class="bi-trash"></i></a>';
 

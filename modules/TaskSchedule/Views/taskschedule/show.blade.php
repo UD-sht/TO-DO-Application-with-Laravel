@@ -7,11 +7,11 @@
     <div class="mb-2 row">
         <div class="col-lg-3">
             <div class="d-flex align-items-center h-100">
-                <label for="task_name" class="m-0">Task Name</label>
+                <label for="title" class="m-0">Task Name</label>
             </div>
         </div>
         <div class="col-lg-9">
-            <p>{{ $task->task_name }}</p>
+            <p>{{ $task->title }}</p>
         </div>
     </div>
 

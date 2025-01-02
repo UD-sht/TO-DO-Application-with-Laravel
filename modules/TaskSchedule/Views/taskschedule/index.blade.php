@@ -11,7 +11,7 @@
                 serverSide: true,
                 ajax: "{{ route('todo.index') }}",
                 columns: [{
-                        data: 'task_name'
+                        data: 'title'
                     },
                     {
                         data: 'status'
@@ -34,29 +34,52 @@
                 ajaxMasterRecordDelete($(this), oTable);
             });
 
+
+
             $(document).on('click', '.open-modal-form', function(e) {
                 e.preventDefault();
                 $('#openModal').find('.modal-content').html('');
                 $('#openModal').modal('show').find('.modal-content').load($(this).attr('href'), function() {
                     const form = document.getElementById('taskForm');
-                    $(form).find(".select2").each(function() {
-                        $(this)
-                            .wrap("<div class=\"position-relative\"></div>")
-                            .select2({
-                                dropdownParent: $(this).parent(),
-                                width: '100%',
-                                dropdownAutoWidth: true
-                            });
+
+                    $(form).find(".select2").select2({
+                        dropdownParent: $(form),
+                        width: '100%',
+                        dropdownAutoWidth: true
                     });
+
+                    $(form).find("input[name='due_date']").attr('data-toggle', 'datepicker')
+                        .datepicker({
+                            language: 'en-GB',
+                            autoHide: true,
+                            format: 'yyyy-mm-dd',
+                            zIndex: 1100,
+                        });
+
                     const fv = FormValidation.formValidation(form, {
                         fields: {
-                            task_name: {
+                            title: {
                                 validators: {
                                     notEmpty: {
-                                        message: 'Task name is required',
+                                        message: 'The title is required',
                                     },
                                 },
                             },
+                            due_date: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The date is required',
+                                    },
+                                },
+                            },
+                            description: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The description is required',
+                                    },
+                                },
+                            },
+
                         },
                         plugins: {
                             trigger: new FormValidation.plugins.Trigger(),
@@ -122,7 +145,7 @@
                         <table class="table" id="taskTable">
                             <thead class="thead-light">
                                 <tr>
-                                    <th>Task </th>
+                                    <th>Task</th>
                                     <th>Status</th>
                                     <th>Priority</th>
                                     <th>Due Date</th>

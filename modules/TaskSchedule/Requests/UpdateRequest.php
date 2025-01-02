@@ -9,7 +9,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'task_name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'priority' => 'required|in:low,medium,high',
             'status' => 'required|in:pending,in_progress,completed,overdue',

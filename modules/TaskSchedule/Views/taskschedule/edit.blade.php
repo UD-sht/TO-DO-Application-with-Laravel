@@ -10,11 +10,11 @@
         <div class="mb-2 row">
             <div class="col-lg-3">
                 <div class="d-flex align-items-center h-100">
-                    <label for="id-task_name" class="m-0 required-label">Task Name</label>
+                    <label for="id-title" class="m-0 required-label">Task Name</label>
                 </div>
             </div>
             <div class="col-lg-9">
-                <input type="text" class="form-control" name="task_name" id="id-task_name" value="{{ old('task_name', $task->task_name) }}" required>
+                <input type="text" class="form-control" name="title" id="id-title" value="{{ old('title', $task->title) }}" required>
             </div>
         </div>
 

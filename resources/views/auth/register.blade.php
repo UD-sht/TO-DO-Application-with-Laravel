@@ -71,7 +71,7 @@
                         user_code: {
                             validators: {
                                 notEmpty: {
-                                    message: 'The user code (staff id) is required.',
+                                    message: 'The user code is required.',
                                 },
                                 remote: {
                                     message: 'The user code is already taken',
