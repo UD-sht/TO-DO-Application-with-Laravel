@@ -2,29 +2,57 @@
 
 @section('title', 'Change password')
 @push('scripts')
-    <script>
-        var state = false;
-
-        function toggle() {
-            if (state) {
-                document.getElementById("password").setAttribute("type", "password");
-                document.getElementById("eye").style.color = '#7a797e';
-                state = false;
-            } else {
-                document.getElementById("password").setAttribute("type", "text");
-                document.getElementById("eye").style.color = '#5887ef';
-                state = true;
-            }
-        }
+    <script type="text/javascript" nonce="{{ csp_nonce() }}">
+        document.addEventListener('DOMContentLoaded', function(e) {
+            $("#current_eye").click(function() {
+                $(this).toggleClass('bi-eye');
+                $(this).toggleClass('bi-eye-slash');
+                const isPasswordVisible = document.getElementById("current_password").getAttribute("type") ===
+                    "text";
+                if (isPasswordVisible) {
+                    document.getElementById("current_password").setAttribute("type", "password");
+                    document.getElementById("current_eye").style.color = '#7a797e';
+                } else {
+                    document.getElementById("current_password").setAttribute("type", "text");
+                    document.getElementById("current_eye").style.color = '#5887ef';
+                }
+            });
+            $("#new_eye").click(function() {
+                $(this).toggleClass('bi-eye');
+                $(this).toggleClass('bi-eye-slash');
+                const isPasswordVisible = document.getElementById("new_password").getAttribute("type") ===
+                    "text";
+                if (isPasswordVisible) {
+                    document.getElementById("new_password").setAttribute("type", "password");
+                    document.getElementById("new_eye").style.color = '#7a797e';
+                } else {
+                    document.getElementById("new_password").setAttribute("type", "text");
+                    document.getElementById("new_eye").style.color = '#5887ef';
+                }
+            });
+            $("#confirm_eye").click(function() {
+                $(this).toggleClass('bi-eye');
+                $(this).toggleClass('bi-eye-slash');
+                const isPasswordVisible = document.getElementById("confirm_password").getAttribute("type") ===
+                    "text";
+                if (isPasswordVisible) {
+                    document.getElementById("confirm_password").setAttribute("type", "password");
+                    document.getElementById("confirm_eye").style.color = '#7a797e';
+                } else {
+                    document.getElementById("confirm_password").setAttribute("type", "text");
+                    document.getElementById("confirm_eye").style.color = '#5887ef';
+                }
+            });
+        });
     </script>
 @endpush
 @section('page_js')
     <script>
         document.addEventListener('DOMContentLoaded', function(e) {
             const form = document.getElementById('changePasswordForm');
-            const strongPassword = function () {
+            const strongPassword = function() {
                 return {
-                    validate: function (input) {
+                    validate: function(input) {
                         const value = input.value;
                         if (value === '') {
                             return {
@@ -64,7 +92,7 @@
                             };
                         }
 
-                        if(!value.match(/\W/)){
+                        if (!value.match(/\W/)) {
                             return {
                                 valid: false,
                                 message: 'The password must contain at least one special character',
@@ -163,8 +191,10 @@
             <div class="card">
 
                 <div class="card-body">
-                    <form class="fv-plugins-bootstrap5 fv-plugins-framework" id="changePasswordForm" autocomplete="off"
-                        method="post" action="{{ route('change.password.store') }}">
+                    <form
+                        class="form-signin auth-right d-flex flex-column align-items-center justify-content-center h-100 pt-3"
+                        id="changePasswordForm" autocomplete="off" method="post"
+                        action="{{ route('change.password.store') }}">
 
                         @if (session('warning_message'))
                             <span class="badge bg-danger justify-content-start p-2 w-75 text-capitalize"><i
@@ -183,22 +213,16 @@
                                                 <label for="" class="m-0">Current Password</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-9 ">
-                                            <div class="mb-3 position-relative">
-                                                <input type="password"
-                                                    class="form-control  @if ($errors->has('current_password')) is-invalid @endif"
-                                                    name="current_password" placeholder="Current Password" autofocus />
-{{--                                                <span class="t-eye">--}}
-{{--                                                    <i class="bi-eye" id="eye" onclick="toggle()">--}}
-{{--                                                    </i>--}}
-{{--                                                </span>--}}
-                                                @if ($errors->has('current_password'))
-                                                    <div class="fv-plugins-message-container invalid-feedback">
-                                                        <div data-field="current_password">{!! $errors->first('current_password') !!}</div>
-                                                    </div>
-                                                @endif
-                                            </div>
-
+                                        <div class="col-lg-9 form-group">
+                                            <input type="password"
+                                                class="form-control  @if ($errors->has('current_password')) is-invalid @endif"
+                                                name="current_password" placeholder="Current Password" autofocus id="current_password"/>
+                                                <span><i class="bi-eye toggle-password position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" id="current_eye"></i></span>
+                                            @if ($errors->has('current_password'))
+                                                <div class="fv-plugins-message-container invalid-feedback">
+                                                    <div data-field="current_password">{!! $errors->first('current_password') !!}</div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row mb-2">
@@ -210,7 +234,8 @@
                                         <div class="col-lg-9 position-relative">
                                             <input type="password"
                                                 class="form-control  @if ($errors->has('new_password')) is-invalid @endif"
-                                                name="new_password" placeholder="New Password" id="new_password" />
+                                                name="new_password" placeholder="New Password" id="new_password"/>
+                                                <span><i class="bi-eye toggle-password position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" id="new_eye"></i></span>
                                             @if ($errors->has('new_password'))
                                                 <div class="fv-plugins-message-container invalid-feedback">
                                                     <div data-field="new_password">{!! $errors->first('new_password') !!}</div>
@@ -227,7 +252,8 @@
                                         <div class="col-lg-9 position-relative">
                                             <input type="password"
                                                 class="form-control  @if ($errors->has('confirm_password')) is-invalid @endif"
-                                                name="confirm_password" placeholder="Confirm Password" />
+                                                name="confirm_password" placeholder="Confirm Password" id="confirm_password"/>
+                                                <span><i class="bi-eye toggle-password position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" id="confirm_eye"></i></span>
                                             @if ($errors->has('confirm_password'))
                                                 <div class="fv-plugins-message-container invalid-feedback">
                                                     <div data-field="confirm_password">{!! $errors->first('confirm_password') !!}</div>

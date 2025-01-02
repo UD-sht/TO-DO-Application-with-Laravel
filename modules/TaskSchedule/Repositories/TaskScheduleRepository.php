@@ -23,10 +23,11 @@ class TaskScheduleRepository extends BaseRepository
             ->first();
     }
 
-    public function taskScheduleListQuery()
+    public function taskScheduleListQuery($user)
     {
         return DB::table($this->model->getTable() . ' as t1')
-        ->select('*');
+        ->select('*')
+        ->where('user_code', $user);
     }
     public function create($inputs)
     {

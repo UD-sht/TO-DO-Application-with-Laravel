@@ -22,8 +22,9 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
+        $user = Auth::user()->user_code;
         if ($request->ajax()) {
-            $tasks = $this->taskSchedules->taskScheduleListQuery();
+            $tasks = $this->taskSchedules->taskScheduleListQuery($user);
 
             return DataTables::of($tasks)
                 ->addIndexColumn()

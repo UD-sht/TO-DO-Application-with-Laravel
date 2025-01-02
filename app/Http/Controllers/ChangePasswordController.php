@@ -5,17 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Request\ChangePassword\StoreRequest;
 
 class ChangePasswordController extends Controller
 {
-    /**
-     * UserController constructor.
-     *
-     * @param UserRepository $users
-     */
-    public function __construct(
-        protected UserRepository $users
-    ) {
+    protected UserRepository $users;
+
+    public function __construct(UserRepository $users)
+    {
         $this->users = $users;
     }
 
@@ -24,46 +23,28 @@ class ChangePasswordController extends Controller
         return view('auth.change_password');
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
+        $inputs = $request->validated();
         DB::beginTransaction();
         try {
-            $inputs = $request->except('_token', 'method', 'uri', 'ip');
-            $bindingArray = [
-                'user_code' => auth()->user()->user_code,
-                'old_password' => $request->current_password,
-                'new_password' => $request->new_password,
-                'success' => 'bindings',
-                'msg' => 'bindings',
-            ];
-
-            $params = $this->users->setCustomParameters($bindingArray);
-            $bindings = $this->users->setBindings(
-                array(
-                    'msg' => ['string'],
-                    'success' => ['string'],
-                ),
-                true
-            );
-
-            $result = $this->users->procedureCallWithoutOperation('PKG_CALL_SECURITY.PRC_CHANGE_PASSWORD', $params, $bindings);
-
-            if (isset($result['success'])) {
-                if ($result['success'] == 'N') {
-                    throw new \Exception($result['msg'], 1);
-                }
+            $user = Auth::user();
+            if (!Hash::check($request->input('current_password'), $user->password)) {
+                return redirect()->back()->withInput()
+                ->with('warning_message', __('The current password is incorrect.'));
             }
+            $user->password = Hash::make($request->input('new_password'));
+            $this->users->update($user->user_code, ['password' => $user->password]);
+
             DB::commit();
-            \Auth::logout();
-            $request->session()->flash(
-                'success',
-                'Password updated successfully, Please login to continue'
-            );
-            return redirect()->route('login');
+            Auth::logout();
+            return redirect()->route('login')
+                ->with('success_message', __('Your password has been successfully changed. Please log in again.'));
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             return redirect()->back()->withInput()
-                ->withWarningMessage($e->getMessage());
+                ->with('warning_message', $e->getMessage());
         }
     }
 }
