@@ -1,6 +1,7 @@
 @extends('layouts.container')
 
 @section('title', 'TODO')
+
 @section('page_js')
     <script type="text/javascript" nonce="{{ csp_nonce() }}">
         document.addEventListener('DOMContentLoaded', function(e) {

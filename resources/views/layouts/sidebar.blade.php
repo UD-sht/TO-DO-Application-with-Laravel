@@ -11,10 +11,15 @@
                 <div class="navbar-vertical-content">
                     <div id="navbarVerticalMenu" class="nav nav-vertical card-navbar-nav nav-tabs flex-column d-block">
                         <div class="nav-item">
+                            <a href="{{ route('dashboard.index') }}" class="nav-link" id="dashboard-menu">
+                                <i class="bi bi-house nav-icon"></i>Home
+                            </a>
+                        </div>
+                        <div class="nav-item">
                             <a class="nav-link" href="{{ route('todo.index') }}"
                                     id="task-schedule-menu">
                                     <i class="bi bi-columns-gap nav-icon"></i>Add Task</a>
-                        </di v>
+                        </div>
                         {{-- <div class="nav-item">
                              <a class="nav-link dropdown-toggle" href="#navbarTaskScheduleMenuName" role="button"
                                 data-bs-toggle="collapse" data-bs-target="#navbarTaskScheduleMenuName"

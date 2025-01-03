@@ -53,6 +53,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function routeNotificationForMail()
+    {
+        return $this->email_address;
+    }
     public function shouldChangePassword()
     {
         return $this->password_expire_date < Carbon::now();

@@ -12,7 +12,7 @@
     </div>
     <ul class="m-0 list-unstyled list-inline">
         {{-- <li class="list-inline-item"><a href="#"><i class="bi-plus"></i></a></li> --}}
-        {{-- <li class="list-inline-item i-noftif has-notification">
+        <li class="list-inline-item i-noftif has-notification">
             <div class="dropdown">
                 <span class="dropdown-toggle position-relative" type="button" id="notification"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,7 +39,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <a href="{{ $notification->data['link'] }}" class="stretched-link"></a>
+                            {{--                                <a href="{{ $notification->data['link'] }}" class="stretched-link"></a> --}}
                             <a href="{{ route('notifications.show', $notification->id) }}" class="stretched-link"></a>
                         </li>
                     @endforeach
@@ -47,7 +47,7 @@
                             href="{{ route('notifications.index') }}"><i class=""></i> View All</a></li>
                 </ul>
             </div>
-        </li> --}}
+        </li>
 
         <li class="list-inline-item">
             <div class="dropdown me-3">
@@ -65,7 +65,7 @@
                     </li>
                     <li>
                         <a class="dropdown-item fs-6 text-dark" href="#"><i class="bi-gear-fill me-2"></i>
-                            {!! $authUser ? $authUser->email_address : '' !!}
+                            {!! $authUser ? $authUser->full_name : '' !!}
                         </a>
                     </li>
                     <li>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ChangePasswordController;
 
 Route::get('/', function () {
@@ -29,6 +30,6 @@ Route::group(['middleware' => ['web', 'auth', 'logger', 'add-csp-headers']], fun
     Route::get('change/password', [ChangePasswordController::class, 'create'])->name('change.password.create');
     Route::post('change/password', [ChangePasswordController::class, 'store'])->name('change.password.store');
 
-    // Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    // Route::get('notifications/{url}', [NotificationController::class, 'show'])->name('notifications.show');
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('notifications/{url}', [NotificationController::class, 'show'])->name('notifications.show');
 });

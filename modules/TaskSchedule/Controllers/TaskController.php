@@ -5,9 +5,12 @@ namespace Modules\TaskSchedule\Controllers;
 use Exception;
 use App\Classes\Helper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\TaskNotification;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Notification;
 use Modules\TaskSchedule\Models\TaskSchedule;
 use Modules\TaskSchedule\Requests\StoreRequest;
 use Modules\TaskSchedule\Requests\UpdateRequest;
@@ -66,7 +69,12 @@ class TaskController extends Controller
         try {
             $inputs = $request->validated();
             $inputs['user_code'] = Auth::user()->user_code;
-            $this->taskSchedules->create($inputs);
+            $task = $this->taskSchedules->create($inputs);
+            $type = 'created';
+
+            $task->user->notify(new TaskNotification($task, $type));
+
+            // Notification::send($task->user, new TaskNotification($task, 'created'));
 
             $response = ['message' => __('message.model-created', ['name' => 'Task'])];
 
@@ -91,10 +99,11 @@ class TaskController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         try {
-            $task = TaskSchedule::findOrFail($id);
-            $taskData = $request->validated();
-            $taskData['user_code'] = Auth::user()->user_code;
-            $task->update($taskData);
+            $inputs = $request->validated();
+            $inputs['user_code'] = Auth::user()->user_code;
+            $task = $this->taskSchedules->update($id, $inputs);
+
+            Notification::send($task->user, new TaskNotification($task, 'updated'));
 
             $response = ['message' => __('message.model-updated', ['name' => 'Task'])];
 

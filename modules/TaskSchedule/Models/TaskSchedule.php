@@ -19,6 +19,6 @@ class TaskSchedule extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_code', 'user_code');
     }
 }

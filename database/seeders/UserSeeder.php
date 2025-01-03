@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'user_code' => '1111',
+                'full_name' => 'Admin',
                 'email_address' => 'admin@gmail.com',
                 'password' => bcrypt('password'),
                 'password_change_date' => date('Y-m-d H:i:s'),

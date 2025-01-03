@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Http\Request;
+use GuzzleHttp\Cookie\CookieJar;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Modules\Privilege\Repositories\UserRepository;
 
 class NotificationController extends Controller
 {
@@ -23,11 +23,6 @@ class NotificationController extends Controller
      */
     public function __construct() {}
 
-    /**
-     * Display a listing of the notifications.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function index(Request $request)
     {
         $user = Auth::user();
