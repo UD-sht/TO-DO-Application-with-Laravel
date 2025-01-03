@@ -10,9 +10,15 @@ class UserRepository
     protected $model;
     public function __construct(
         User $user
-    )
-    {
+    ) {
         $this->model = $user;
+    }
+
+    public function getModalObject($user)
+    {
+        return $this->model
+            ->where("user_code", $user)
+            ->first();
     }
 
     public function getUserByMobileNumber($mobileNo)

@@ -15,10 +15,15 @@
                                 <i class="bi bi-house nav-icon"></i>Home
                             </a>
                         </div>
-                        <div class="nav-item">
+                        <div class="nav-item border-bottom">
                             <a class="nav-link" href="{{ route('todo.index') }}"
                                     id="task-schedule-menu">
                                     <i class="bi bi-columns-gap nav-icon"></i>Add Task</a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="nav-link" href="{{ route('profile.index') }}"
+                                    id="profile-menu">
+                                    <i class="bi bi-person nav-icon"></i>Profile</a>
                         </div>
                         {{-- <div class="nav-item">
                              <a class="nav-link dropdown-toggle" href="#navbarTaskScheduleMenuName" role="button"

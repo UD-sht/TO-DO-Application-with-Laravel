@@ -27,8 +27,8 @@ class UpdateRequest extends FormRequest
             'user_password' => 'required_if:change_password,1|min:8|regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/',
             'retype_user_password'=>'required_if:change_password,1|same:user_password',
             "full_name" => "required|string|min:3",
-            'mobile_number'=>"required|digits:10|unique:sec_users,mobile_number,".$this->userCode . ',user_code',
-            'email_address'=>"required|email|unique:sec_users,email_address,".$this->userCode . ',user_code',
+            'mobile_number'=>"required|digits:10|",
+            'email_address'=>"required|email|",
         ];
     }
 
